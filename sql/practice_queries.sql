@@ -1,9 +1,9 @@
 -- Part 1) The SELECT Statement
 
--- -- We first establish what database we want to use
+-- We first establish what database we want to use
 USE sql_store
 
--- -- Select the data we want to retrieve
+-- Select the data we want to retrieve
 SELECT *
 FROM customers
 WHERE state = 'FL';
@@ -12,8 +12,8 @@ WHERE state = 'FL';
 
 -- Part 2) The SELECT Clause
 
--- -- The SELECT "statement" is the full instruction you give to the database;
--- -- The SELECT "clause" is just the SELECT keyword—a piece of this statement.
+-- The SELECT "statement" is the full instruction you give to the database;
+-- The SELECT "clause" is just the SELECT keyword—a piece of this statement.
 
 SELECT
 first_name,
@@ -157,3 +157,30 @@ SELECT * FROM customers WHERE last_name REGEXP 'b[ru]';
 
 -- Get the orders that are NOT shipped
 SELECT * FROM orders WHERE shipped_date IS NULL;
+
+-- ...
+
+-- Part 10) The ORDER BY Operator
+
+SELECT * FROM customers ORDER BY first_name;
+SELECT * FROM customers ORDER BY last_name DESC;
+SELECT * FROM customers ORDER BY state, last_name DESC;
+
+SELECT birth_date FROM customers ORDER BY state DESC, last_name;
+
+-- Exercise: select all products for order w id=2 and order 
+-- them by total price in descending order
+
+SELECT *, quantity*unit_price AS total_price
+FROM order_items
+WHERE order_id=2 ORDER BY total_price DESC;
+
+-- ...
+
+-- Part 10) The LIMIT Operator
+
+SELECT * FROM customers LIMIT 3; -- show first three entries
+SELECT * FROM customers LIMIT 6, 3; -- skip first six, then show next three
+
+-- Exercise: Get the top three loyal customers (most points)
+SELECT * FROM customers ORDER BY points DESC LIMIT 3;
