@@ -6,7 +6,7 @@ USE sql_store
 -- -- Select the data we want to retrieve
 SELECT *
 FROM customers
-WHERE state = 'FL';jj
+WHERE state = 'FL';
 
 -- ...
 
@@ -92,7 +92,7 @@ WHERE quantity_in_stock IN (49, 38, 72);
 
 SELECT *
 FROM customers
-WHERE points BETWEEN 1000 AND 30000
+WHERE points BETWEEN 1000 AND 30000;
 
 -- Exercise: Return customers born between 1/1/1990 and 1/1/2000
 
@@ -122,7 +122,38 @@ SELECT * FROM customers WHERE phone LIKE "%9";
 
 -- Part 8) The REGEXP Operator
 
-SELECT *
-FROM customers
-WHERE last_name LIKE '%field'
-REGEXP 
+-- E.g. carat '^' represents start of string
+SELECT * FROM customers WHERE last_name REGEXP '^field';
+
+-- E.g. dollar sign '$' represents end of string
+SELECT last_name FROM customers WHERE last_name REGEXP 'field$';
+
+-- In regex, the pipe '|' = OR
+SELECT last_name FROM customers WHERE last_name REGEXP 'field|mac|rose';
+SELECT last_name FROM customers WHERE last_name REGEXP '^field|mac|rose';
+SELECT last_name FROM customers WHERE last_name REGEXP 'field$|mac|rose';
+
+-- Square brackets = “match any one character from this set.” 
+SELECT last_name FROM customers WHERE '[gim]e';
+SELECT last_name FROM customers WHERE '[a-h]e'; -- hyphens = range
+
+-- Exercises: Get the customers whose...
+
+-- 1) first names are ELKA or AMBUR
+SELECT * FROM customers WHERE first_name REGEXP 'elka|ambur';
+
+-- 2) last names end with EY or ON
+SELECT * FROM customers WHERE last_name REGEXP 'ey$|on$';
+
+-- 3) last names start with MY or contains SE
+SELECT * FROM customers WHERE last_name REGEXP '^my|se';
+
+-- 4) last names contain B followed by R or U
+SELECT * FROM customers WHERE last_name REGEXP 'b[ru]';
+
+-- ...
+
+-- Part 9) The IS NULL Operator
+
+-- Get the orders that are NOT shipped
+SELECT * FROM orders WHERE shipped_date IS NULL;
